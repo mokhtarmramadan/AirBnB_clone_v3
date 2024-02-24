@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-new view for City objects that handles 
+new view for City objects that handles
 all default RESTFul API actions
 """
 from api.v1.views import app_views
@@ -26,6 +26,7 @@ def get_cities_state(state_id):
             cities_list.append(city.to_dict())
     return (jsonify(cities_list))
 
+
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_cities_id(city_id):
     """ get city with its id """
@@ -34,6 +35,7 @@ def get_cities_id(city_id):
         if city.id == city_id:
             return (jsonify(city.to_dict()))
     abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city_id(city_id):
@@ -44,7 +46,8 @@ def delete_city_id(city_id):
             storage.delete(city)
             storage.save()
             return jsonify({})
-    abort (404)
+    abort(404)
+
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_city_id(city_id):
@@ -59,7 +62,7 @@ def update_city_id(city_id):
         abort(404)
 
     if not request.get_json():
-        abort(400, 'Not a JSON')
+        abort(400, "Not a JSON")
 
     for key, value in request.get_json().items():
         if (key != 'id') or (key != 'state_id') or (key != 'created_at') or (
@@ -67,6 +70,7 @@ def update_city_id(city_id):
             obj.__dict__[key] = value
     obj.save()
     return (jsonify(obj.to_dict()))
+
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def add_cities_state(state_id):
@@ -79,10 +83,10 @@ def add_cities_state(state_id):
     if flag == 0:
         abort(404)
 
-    if not request.get_json():
-        abort(400, 'Not a JSON')
+    if not request.json():
+        abort(400, "Not a JSON")
     if "name" not in request.get_json():
-        abort(400, 'Missing name')
+        abort(400, "Missing name")
     new_city = City(**request.get_json())
     new_city.save()
     return (jsonify(new_city.to_dict()), 201)
