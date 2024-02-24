@@ -14,4 +14,4 @@ state = {
 @app_views.route('/status', strict_slashes=False)
 def status():
     """ return status """
-    return jsonify(state), 200, {'Content-Type': 'application/json'}
+    return jsonify(state)
