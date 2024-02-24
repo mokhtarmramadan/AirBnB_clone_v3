@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from flask import jsonify, Blueprint
 from models import storage
 
+
 @app_views.route('/status', strict_slashes=False)
 def status():
     """ return status """
@@ -13,6 +14,7 @@ def status():
         "status": "OK"
     }
     return jsonify(state)
+
 
 @app_views.route('/stats', strict_slashes=False)
 def stats():
