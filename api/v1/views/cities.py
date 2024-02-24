@@ -18,7 +18,7 @@ def get_cities_state(state_id):
         if state.id == state_id:
             flag = 1
     if flag == 0:
-        abort(400)
+        abort(404)
     cities_list = []
     cities = storage.all('City').values()
     for city in cities:
@@ -43,7 +43,7 @@ def delete_city_id(city_id):
         if city.id == city_id:
             storage.delete(city)
             storage.save()
-            return jsonify({}), 200
+            return jsonify({})
     abort (404)
 
 @app_views.route('/cities/<city_id>', methods=['PUT'])
@@ -77,7 +77,7 @@ def add_cities_state(state_id):
         if state.id == state_id:
             flag = 1
     if flag == 0:
-        abort(400)
+        abort(404)
 
     if not request.get_json():
         abort(400, 'Not a JSON')
@@ -85,4 +85,4 @@ def add_cities_state(state_id):
         abort(400, 'Missing name')
     new_city = City(**request.get_json())
     new_city.save()
-    return (jsonify(new_city.to_dict()))
+    return (jsonify(new_city.to_dict()), 201)
