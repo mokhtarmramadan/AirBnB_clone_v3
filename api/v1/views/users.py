@@ -65,9 +65,3 @@ def updates_user(user_id):
             user.save()
             return jsonify(user.to_dict()), 200
     abort(404)
-
-
-
-
-
-
