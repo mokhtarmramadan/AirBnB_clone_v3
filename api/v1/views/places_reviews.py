@@ -12,7 +12,7 @@ from models.review import Review
 def all_places_reviews(place_id):
     """ Retrieves the list of reviews of a specific place"""
     all_reviews = []
-    place = storage.get('City', place_id)
+    place = storage.get('Place', place_id)
     if place is None:
         abort(404)
     for review in storage.all("Review").values():
@@ -38,7 +38,7 @@ def get_review(review_id):
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
 def post_new_review(place_id):
     """ add new places to a specific city """
-    place = storage.get('City', place_id)
+    place = storage.get('Place', place_id)
     if place is None:
         abort(404)
 
@@ -47,14 +47,14 @@ def post_new_review(place_id):
 
     if "user_id" not in request.get_json():
         abort(400, "Missing user_id")
-
+    print("i am okay")
     user = storage.get('User', request.get_json()['user_id'])
     if user is None:
         abort(404)
 
     if "text" not in request.get_json():
         abort(400, "Missing text")
-
+    request.get_json()['place_id'] = place_id
     review = Review(**request.get_json())
     review.save()
     return (jsonify(review.to_dict()), 201)
@@ -74,4 +74,4 @@ def update_review_id(review_id):
                     setattr(review, key, value)
             review.save()
             return jsonify(review.to_dict())
-    abort(400)
+    abort(404)
