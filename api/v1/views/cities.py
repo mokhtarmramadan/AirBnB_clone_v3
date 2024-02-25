@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 """
 new view for City objects that handles
 all default RESTFul API actions
@@ -60,7 +61,7 @@ def add_cities_state(state_id):
     if flag == 0:
         abort(404)
 
-    if not request.json():
+    if not request.json:
         abort(400, "Not a JSON")
     if "name" not in request.get_json():
         abort(400, "Missing name")
