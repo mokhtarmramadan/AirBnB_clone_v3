@@ -46,3 +46,20 @@ def create_amenity():
     storage.save()
     amenities.append(new_amenity.to_dict())
     return jsonify(amenities[0]), 201
+
+
+@app_views.route('/amenities/<am_id>', strict_slashes=False, methods=['PUT'])
+def updates_amenity(am_id):
+    """ Updates an Amenity object """
+    amenities = storage.all("Amenity").values()
+    amenity_obj = [obj.to_dict() for obj in amenities if obj.id == am_id]
+    if amenity_obj == []:
+        abort(404)
+    if not request.get_json():
+        abort(400, 'Not a JSON')
+    amenity_obj[0]['name'] = request.json['name']
+    for obj in amenities:
+        if obj.id == am_id:
+            obj.name = request.json['name']
+    storage.save()
+    return jsonify(amenity_obj[0]), 200
