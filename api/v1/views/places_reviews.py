@@ -22,7 +22,7 @@ def all_places_reviews(place_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['GET', 'DELETE'])
-def get_place(review_id):
+def get_review(review_id):
     """ Retrieves a review object """
     for obj in storage.all("Review").values():
         if obj.id == review_id:
@@ -36,7 +36,7 @@ def get_place(review_id):
 
 
 @app_views.route('/places/<place_id>/reviews', methods=['POST'])
-def post_new_data(place_id):
+def post_new_review(place_id):
     """ add new places to a specific city """
     place = storage.get('City', place_id)
     if place is None:
@@ -61,7 +61,7 @@ def post_new_data(place_id):
 
 
 @app_views.route('/reviews/<review_id>', methods=['PUT'])
-def update_place_id(review_id):
+def update_review_id(review_id):
     """ update the place with its id """
     if not request.get_json():
         abort(400, "Not a JSON")
