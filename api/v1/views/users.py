@@ -18,7 +18,7 @@ def get_users():
     return users
 
 
-@app_views.route('/users/<am_id>', methods=['GET', 'DELETE'])
+@app_views.route('/users/<user_id>', methods=['GET', 'DELETE'])
 def get_user(user_id):
     """ Retrieves or Deletes a user object """
     for obj in storage.all('User').values():
@@ -48,7 +48,7 @@ def create_user():
     return jsonify(users[0]), 201
 
 
-@app_views.route('/user/<am_id>', strict_slashes=False, methods=['PUT'])
+@app_views.route('/users/<user_id>', strict_slashes=False, methods=['PUT'])
 def updates_user(user_id):
     """ Updates user object """
     users = storage.all("User").values()
