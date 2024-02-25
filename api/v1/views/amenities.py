@@ -7,4 +7,11 @@ from models import storage
 from models.amenity import Amenity
 
 
-@app_views.route('/amenities', strict
+@app_views.route('/amenities', strict_slashes=False, methods=['GET'])
+def get_amenities():
+    amenities = []
+    for obj in storage.all('Amenity').values():
+        amenities.append(obj.to_dict())
+    if amenities == []:
+        abort(404)
+    return amenities
