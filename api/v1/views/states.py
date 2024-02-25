@@ -29,7 +29,7 @@ def get_state(state_id):
     abort(404)
 
 
-@app_views.route('/states/', methods=['POST'])
+@app_views.route('/states/', strict_slashes=False, methods=['POST'])
 def create_state():
     """ Creates a State """
     if not request.get_json():
@@ -44,7 +44,7 @@ def create_state():
     return jsonify(states[0]), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def updates_state(state_id):
     """ Updates a State object """
     all_states = storage.all("State").values()
