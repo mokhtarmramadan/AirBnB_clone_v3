@@ -60,7 +60,7 @@ def add_cities_state(state_id):
     if flag == 0:
         abort(404)
 
-    if not request.json():
+    if not request.get_json():
         abort(400, "Not a JSON")
     if "name" not in request.get_json():
         abort(400, "Missing name")
@@ -74,21 +74,15 @@ def add_cities_state(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_city_id(city_id):
     """ update city with its id"""
-    cities = storage.all('City').values()
-    flag = 0
-    for city in cities:
-        if city.id == city_id:
-            obj = city
-            flag = 1
-    if flag == 0:
-        abort(404)
-
     if not request.get_json():
         abort(400, "Not a JSON")
 
-    for key, value in request.get_json().items():
-        if (key != 'id') or (key != 'state_id') or (key != 'created_at') or (
-                key != 'updated_at'):
-            obj.__dict__[key] = value
-    obj.save()
-    return (jsonify(obj.to_dict()))
+    ignored_keys = ['id', 'state_id', 'created_at', 'updated_at']
+    for city in storage.all('City').values():
+        if city.id == city_id:
+            for k, v in request.get_json().items():
+                if k not in ignored_keys:
+                    setattr(city, k, v)
+            city.save()
+            return jsonify(city.to_dict())
+    abort(404)
