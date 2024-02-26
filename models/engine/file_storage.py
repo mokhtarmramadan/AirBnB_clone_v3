@@ -71,7 +71,7 @@ class FileStorage:
         self.reload()
 
     def get(self, cls, id):
-        " gets an object based on the id and cls name"
+        " gets an object based on the id and cls name "
         objects = models.storage.all(cls)
         for v in objects.values():
             if v.id == id:
@@ -79,6 +79,6 @@ class FileStorage:
         return None
 
     def count(self, cls=None):
-        "Counts the number of cls"
+        " Counts the number of cls "
         count = len(models.storage.all(cls))
         return count
