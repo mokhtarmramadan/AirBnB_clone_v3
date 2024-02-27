@@ -34,6 +34,8 @@ def create_state():
     """ Creates a State """
     if not request.get_json() or not request.is_json:
         abort(400, 'Not a JSON')
+    if request.headers.get('Content-Type') != 'application/json':
+        abort(400)
     if 'name' not in request.get_json():
         abort(400, 'Missing name')
     states = []
@@ -53,6 +55,8 @@ def updates_state(state_id):
         abort(404)
     if not request.get_json() or not request.is_json:
         abort(400, 'Not a JSON')
+    if request.headers.get('Content-Type') != 'application/json':
+        abort(400)
     state_obj[0]['name'] = request.json['name']
     for obj in all_states:
         if obj.id == state_id:
