@@ -32,7 +32,11 @@ def get_state(state_id):
 @app_views.route('/states/', strict_slashes=False, methods=['POST'])
 def create_state():
     """ Creates a State """
+<<<<<<< HEAD
     if not request.get_json() or not request.is_json:
+=======
+    if not request.json:
+>>>>>>> refs/remotes/origin/master
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
         abort(400, 'Missing name')

@@ -51,6 +51,7 @@ def delete_city_id(city_id):
 
 
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
+@app_views.route('/states/<state_id>/cities/', methods=['POST'])
 def add_cities_state(state_id):
     """ add cities of a specific state """
     states = storage.all('State').values()
