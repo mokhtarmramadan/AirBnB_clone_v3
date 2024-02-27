@@ -15,7 +15,7 @@ def get_amenities():
         amenities.append(obj.to_dict())
     if amenities == []:
         abort(404)
-    return amenities
+    return jsonify(amenities)
 
 
 @app_views.route('/amenities/<am_id>', methods=['GET', 'DELETE'])
