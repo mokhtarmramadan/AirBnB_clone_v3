@@ -13,8 +13,6 @@ def get_amenities():
     amenities = []
     for obj in storage.all('Amenity').values():
         amenities.append(obj.to_dict())
-    if amenities == []:
-        abort(404)
     return jsonify(amenities)
 
 
