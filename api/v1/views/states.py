@@ -32,11 +32,7 @@ def get_state(state_id):
 @app_views.route('/states/', strict_slashes=False, methods=['POST'])
 def create_state():
     """ Creates a State """
-<<<<<<< HEAD
     if not request.get_json() or not request.is_json:
-=======
-    if not request.json:
->>>>>>> refs/remotes/origin/master
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
         abort(400, 'Missing name')
@@ -55,7 +51,7 @@ def updates_state(state_id):
     state_obj = [obj.to_dict() for obj in all_states if obj.id == state_id]
     if state_obj == []:
         abort(404)
-    if not request.get_json():
+    if not request.get_json() or not request.is_json:
         abort(400, 'Not a JSON')
     state_obj[0]['name'] = request.json['name']
     for obj in all_states:
